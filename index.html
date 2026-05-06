@@ -120,7 +120,9 @@
             text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
         header h1 span {
-                        opacity: 0.9;
+            font-weight: inherit;
+            color: inherit;
+            opacity: 1;
         }
         header .sub-header {
             font-size: 1.15rem;
@@ -167,6 +169,193 @@
             padding: 0 40px;
         }
 
+        /* TOP SECTION & CALENDAR */
+        .top-section {
+            width: 100%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+        .mini-calendar-container {
+            position: absolute;
+            right: 0;
+            top: 0;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        .mini-calendar {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 10px;
+            box-shadow: var(--shadow-md);
+            width: 260px;
+        }
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+        .calendar-header button {
+            background: none;
+            border: none;
+            color: var(--text-main);
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .calendar-header button:hover {
+            background: var(--border-color);
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+            text-align: center;
+        }
+        .calendar-day-name {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .btn-toggle-cal {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 16px;
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
+            margin-bottom: 8px;
+        }
+        .btn-toggle-cal:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-red);
+        }
+        .calendar-day {
+            font-size: 0.85rem;
+            padding: 4px;
+            border-radius: 4px;
+            cursor: pointer;
+            color: var(--text-main);
+            user-select: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 40px;
+        }
+        .pelotao-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin-top: 3px;
+        }
+        .calendar-day:hover {
+            background: var(--border-color);
+        }
+        .calendar-day.has-event {
+            background: var(--icon-bg);
+            color: var(--primary-red-dark);
+            font-weight: 700;
+        }
+        [data-theme="dark"] .calendar-day.has-event {
+            color: #fca5a5;
+            background: rgba(239, 68, 68, 0.25);
+        }
+        .calendar-legend {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border-color);
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+        .events-popover {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--primary-red);
+            border-radius: var(--radius-md);
+            padding: 12px;
+            box-shadow: var(--shadow-lg);
+            width: 280px;
+            z-index: 50;
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .popover-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+            margin-bottom: 4px;
+            color: var(--text-main);
+        }
+        #popover-list {
+            max-height: 200px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            text-align: left;
+        }
+        .popover-list-item {
+            font-size: 0.85rem;
+            color: var(--text-main);
+            background: rgba(0,0,0,0.03);
+            padding: 8px;
+            border-radius: var(--radius-md);
+            border-left: 3px solid var(--primary-red);
+            line-height: 1.3;
+        }
+        [data-theme="dark"] .popover-list-item {
+            background: rgba(255,255,255,0.05);
+        }
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+        .close-btn:hover {
+            color: var(--primary-red);
+            background: var(--icon-bg);
+        }
+
         /* INFO BAR (ESCALA) */
         .info-bar {
             width: fit-content;
@@ -174,7 +363,6 @@
             padding: 16px 36px;
             border-radius: var(--radius-full);
             font-size: 1.15rem;
-            margin: 0 auto 40px auto;
             border: 2px solid var(--primary-red);
             color: var(--text-main);
             font-weight: 700;
@@ -393,6 +581,20 @@
             .header-text { grid-column: 1 / span 2; grid-row: 2; margin-top: 15px; }
             header h1 { font-size: 2.2rem; }
             .logo-img { height: 80px; }
+            
+            .top-section {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+            .mini-calendar-container {
+                position: static;
+                align-items: center;
+                margin-top: 10px;
+            }
+            .events-popover {
+                right: auto;
+            }
         }
 
         @media (max-width: 650px) {
@@ -441,9 +643,38 @@
     </header>
 
     <main class="main-content">
-        <div class="info-bar" id="data-pelotao">
-            <i class="ph-fill ph-calendar-check"></i>
-            <span>Sincronizando escala...</span>
+        <div class="top-section">
+            <div class="info-bar" id="data-pelotao">
+                <i class="ph-fill ph-calendar-check"></i>
+                <span>Sincronizando escala...</span>
+            </div>
+            
+            <div class="mini-calendar-container" id="calendar-container">
+                <button class="btn-toggle-cal" id="btn-toggle-cal" onclick="toggleCalendar(event)">
+                    <i class="ph-bold ph-calendar"></i> Calendário
+                </button>
+                <div class="mini-calendar" id="mini-calendar" style="display: none;">
+                    <div class="calendar-header">
+                        <button id="cal-prev" onclick="changeMonth(-1)"><i class="ph-bold ph-caret-left"></i></button>
+                        <span id="cal-month-year"></span>
+                        <button id="cal-next" onclick="changeMonth(1)"><i class="ph-bold ph-caret-right"></i></button>
+                    </div>
+                    <div class="calendar-grid" id="cal-grid"></div>
+                    <div class="calendar-legend">
+                        <div class="legend-item"><div class="pelotao-dot" style="margin-top:0; background-color: #3b82f6;"></div> 1º Pel</div>
+                        <div class="legend-item"><div class="pelotao-dot" style="margin-top:0; background-color: #eab308;"></div> 2º Pel</div>
+                        <div class="legend-item"><div class="pelotao-dot" style="margin-top:0; background-color: #22c55e;"></div> 3º Pel</div>
+                        <div class="legend-item"><div class="pelotao-dot" style="margin-top:0; background-color: #ef4444;"></div> 4º Pel</div>
+                    </div>
+                </div>
+                <div id="events-popover" class="events-popover" style="display: none;">
+                    <div class="popover-header">
+                        <span id="popover-date" style="font-weight:600"></span>
+                        <button onclick="closePopover()" class="close-btn"><i class="ph-bold ph-x"></i></button>
+                    </div>
+                    <div id="popover-list"></div>
+                </div>
+            </div>
         </div>
         
         <div id="avisos-wrapper"></div>
@@ -522,6 +753,152 @@
             return text.split('\n').map(row => row.split(',').map(cell => cell.replace(/"/g, '')));
         }
 
+        let currentDate = new Date();
+        let gCalendarEvents = [];
+
+        function parseDate(dateStr) {
+            if (!dateStr || typeof dateStr !== 'string') return null;
+            let parts = dateStr.split('/');
+            if (parts.length === 3) {
+                return new Date(parts[2], parts[1] - 1, parts[0]);
+            }
+            return null;
+        }
+
+        function formatDate(date) {
+            return date.toLocaleDateString('pt-BR', {day: '2-digit', month: '2-digit', year: 'numeric'});
+        }
+
+        function changeMonth(delta) {
+            currentDate.setMonth(currentDate.getMonth() + delta);
+            renderCalendar();
+        }
+
+        function isDateInEvent(date, event) {
+            let d = new Date(date);
+            d.setHours(12,0,0,0);
+            return d >= event.start && d <= event.end;
+        }
+
+        function renderCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            
+            const monthNames = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+            document.getElementById('cal-month-year').innerText = `${monthNames[month]} ${year}`;
+            
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            
+            const grid = document.getElementById('cal-grid');
+            grid.innerHTML = `
+                <div class="calendar-day-name">Dom</div>
+                <div class="calendar-day-name">Seg</div>
+                <div class="calendar-day-name">Ter</div>
+                <div class="calendar-day-name">Qua</div>
+                <div class="calendar-day-name">Qui</div>
+                <div class="calendar-day-name">Sex</div>
+                <div class="calendar-day-name">Sáb</div>
+            `;
+            
+            for (let i = 0; i < firstDay; i++) {
+                grid.appendChild(document.createElement('div'));
+            }
+            
+            const today = new Date();
+            today.setHours(0,0,0,0);
+
+            for (let i = 1; i <= daysInMonth; i++) {
+                const d = new Date(year, month, i);
+                d.setHours(0,0,0,0);
+                
+                const dayDiv = document.createElement('div');
+                dayDiv.className = 'calendar-day';
+                
+                const numSpan = document.createElement('span');
+                numSpan.innerText = i;
+                dayDiv.appendChild(numSpan);
+                
+                const diffDays = Math.floor((Date.UTC(year, month, i) - Date.UTC(2026, 4, 6)) / (1000 * 3600 * 24));
+                const cycleIndex = ((diffDays % 4) + 4) % 4;
+                const pelotoes = ['#eab308', '#22c55e', '#ef4444', '#3b82f6'];
+                const dot = document.createElement('div');
+                dot.className = 'pelotao-dot';
+                dot.style.backgroundColor = pelotoes[cycleIndex];
+                dayDiv.appendChild(dot);
+                
+                let dayEvents = gCalendarEvents.filter(e => isDateInEvent(d, e));
+                
+                if (dayEvents.length > 0) {
+                    dayDiv.classList.add('has-event');
+                }
+                
+                if (d.getTime() === today.getTime()) {
+                    dayDiv.style.border = '1px solid var(--primary-red)';
+                }
+                
+                dayDiv.onclick = (e) => {
+                    e.stopPropagation();
+                    showPopover(d, dayEvents);
+                };
+                grid.appendChild(dayDiv);
+            }
+        }
+
+        function showPopover(date, events) {
+            const popover = document.getElementById('events-popover');
+            const headerDate = document.getElementById('popover-date');
+            const list = document.getElementById('popover-list');
+            
+            headerDate.innerText = formatDate(date);
+            list.innerHTML = '';
+            
+            if (events.length === 0) {
+                list.innerHTML = '<div style="font-size:0.85rem;color:var(--text-muted);text-align:center;padding:8px 0;">Sem eventos</div>';
+            } else {
+                events.forEach(e => {
+                    const item = document.createElement('div');
+                    item.className = 'popover-list-item';
+                    item.innerText = e.msg;
+                    list.appendChild(item);
+                });
+            }
+            popover.style.display = 'flex';
+        }
+
+        function closePopover() {
+            document.getElementById('events-popover').style.display = 'none';
+        }
+
+        function toggleCalendar(e) {
+            if(e) e.stopPropagation();
+            const cal = document.getElementById('mini-calendar');
+            const popover = document.getElementById('events-popover');
+            if (cal.style.display === 'none' || cal.style.display === '') {
+                cal.style.display = 'block';
+            } else {
+                cal.style.display = 'none';
+                if(popover) popover.style.display = 'none';
+            }
+        }
+
+        document.addEventListener('click', (e) => {
+            const popover = document.getElementById('events-popover');
+            const calendar = document.getElementById('mini-calendar');
+            const btn = document.getElementById('btn-toggle-cal');
+            
+            if (popover && popover.style.display !== 'none') {
+                if (!popover.contains(e.target) && !calendar.contains(e.target) && (!btn || !btn.contains(e.target))) {
+                    closePopover();
+                }
+            }
+            if (calendar && calendar.style.display !== 'none') {
+               if(!calendar.contains(e.target) && (!btn || !btn.contains(e.target)) && (!popover || !popover.contains(e.target))) {
+                   calendar.style.display = 'none';
+               }
+            }
+        });
+
         function getIconForText(text) {
             const lowerText = text.toLowerCase();
             // Mapeando palavras chave para ícones
@@ -556,7 +933,24 @@
                 // Avisos e Alertas
                 const avisoData = await fetchSheetData('aviso');
                 wrapper.innerHTML = '';
+                gCalendarEvents = [];
+                
                 if (avisoData) {
+                    avisoData.slice(1).forEach(row => {
+                        const startStr = row[4];
+                        const endStr = row[5];
+                        if (row[0] && startStr) {
+                            let start = parseDate(startStr);
+                            let end = parseDate(endStr) || start;
+                            if (start) {
+                                start.setHours(0,0,0,0);
+                                end.setHours(23,59,59,999);
+                                gCalendarEvents.push({ msg: row[0], start, end });
+                            }
+                        }
+                    });
+                    renderCalendar();
+
                     avisoData.slice(1).forEach(row => {
                         const msg = row[0];
                         const link = row[1];

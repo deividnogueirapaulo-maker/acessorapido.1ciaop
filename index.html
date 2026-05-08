@@ -30,7 +30,7 @@
             --radius-md: 12px;
             --radius-lg: 20px;
             --radius-full: 9999px;
-            --max-width: 1280px;
+            --max-width: 1600px;
         }
 
         [data-theme="dark"] {
@@ -474,9 +474,15 @@
 
         .grid-links {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 24px;
             width: 100%;
+        }
+
+        @media (max-width: 1200px) {
+            .grid-links {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
 
         .link-card {
@@ -594,6 +600,9 @@
             }
             .events-popover {
                 right: auto;
+            }
+            .grid-links {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 

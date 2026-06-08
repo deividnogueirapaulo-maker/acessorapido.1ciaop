@@ -133,7 +133,7 @@
             letter-spacing: 2px;
         }
 
-        .theme-toggle {
+        .theme-toggle, .header-btn {
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.25);
@@ -147,8 +147,9 @@
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(0,0,0,0.15);
             transition: all 0.3s ease;
+            text-decoration: none;
         }
-        .theme-toggle:hover {
+        .theme-toggle:hover, .header-btn:hover {
             background: rgba(255, 255, 255, 0.25);
             transform: translateY(-3px) scale(1.05);
             box-shadow: 0 8px 25px rgba(0,0,0,0.2);
@@ -472,6 +473,44 @@
             color: var(--primary-red);
         }
 
+        .title-search-wrapper {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 30px;
+            gap: 16px;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-full);
+            padding: 8px 16px;
+            box-shadow: var(--shadow-sm);
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        .search-container:focus-within {
+            border-color: var(--primary-red);
+            box-shadow: var(--shadow-md);
+        }
+        .search-container input {
+            border: none;
+            outline: none;
+            background: transparent;
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 1rem;
+            width: 100%;
+            max-width: 250px;
+        }
+        .search-icon {
+            color: var(--text-muted) !important;
+        }
+
         .grid-links {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -620,13 +659,20 @@
             header h1 { font-size: 1.5rem; letter-spacing: -0.5px; }
             header .sub-header { font-size: 0.8rem; letter-spacing: 0.5px; margin-top: 4px; }
             .logo-img { height: 55px; }
-            .theme-toggle { width: 34px; height: 34px; padding: 0; }
-            .theme-toggle i { font-size: 18px !important; }
+            .theme-toggle, .header-btn { width: 34px; height: 34px; padding: 0; }
+            .theme-toggle i, .header-btn i { font-size: 18px !important; }
             .grid-links, #avisos-wrapper { grid-template-columns: 1fr; gap: 16px; }
             .main-content { padding: 0 15px; }
             .info-bar { padding: 12px 20px; font-size: 1rem; margin-bottom: 25px; gap: 8px; width: fit-content; flex-direction: row; }
             .info-bar i { font-size: 1.3rem; }
             .section-title { font-size: 1.2rem; }
+            .title-search-wrapper {
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+            .search-container { width: 100%; }
             .aviso-card h4 { display: none; }
         }
     </style>
@@ -644,6 +690,9 @@
             </div>
             <div class="logo-ld">
                 <img src="https://lh3.googleusercontent.com/pw/AP1GczOz2AhM552qAgdmxiIOyRGmSjpy4CB-NXjG8hi4lrNw7qPO3nvnN2-tBgf_rC2BZ9eRLdT4RMZao6KYQH2491BiXKZTYg2P7dG40u6QFD34WFRxzrBKDPRBDC86-z5kToRz1UtxVhrADJxoQo4ysL1_=w487-h512-s-no-gm?authuser=0" alt="6º BBM" class="logo-img">
+                <a href="https://docs.google.com/spreadsheets/d/1qh_Xkuu0RIKmcnBxuXpuBKIOq91sUi_zpHCKsDD2jcA/edit?gid=509266049#gid=509266049" target="_blank" class="header-btn" title="Acessar Planilha">
+                    <i class="ph-bold ph-table" style="font-size: 24px;"></i>
+                </a>
                 <button class="theme-toggle" id="theme-toggle" aria-label="Alternar tema">
                     <i class="ph-bold ph-moon icon-moon" style="font-size: 24px;"></i>
                     <i class="ph-bold ph-sun icon-sun" style="font-size: 24px;"></i>
@@ -689,8 +738,15 @@
         
         <div id="avisos-wrapper"></div>
         
-        <div class="section-title">
-            <i class="ph-fill ph-squares-four"></i> Sistemas e Links
+        <div class="title-search-wrapper">
+            <div class="section-title" style="margin-bottom: 0;">
+                <i class="ph-fill ph-squares-four"></i> Sistemas e Links
+            </div>
+            <div class="search-container" style="width: 100%; min-width: 300px; max-width: 450px;">
+                <i class="ph-bold ph-magnifying-glass search-icon"></i>
+                <input type="text" id="search-input" placeholder="Pesquisar links..." style="max-width: 100%; flex: 1;">
+            </div>
+            <div></div> <!-- spacer para manter o campo centralizado -->
         </div>
         <div class="grid-links" id="links-container"></div>
     </main>
@@ -1028,10 +1084,30 @@
                         }
                     });
                 }
+                
+                // Re-aplica o filtro caso haja pesquisa ativa
+                const termoPesquisa = document.getElementById('search-input').value.toLowerCase();
+                if (termoPesquisa) {
+                    document.getElementById('search-input').dispatchEvent(new Event('input'));
+                }
+
             } catch (e) { 
                 console.error("Falha ao carregar dados", e); 
             }
         }
+
+        document.getElementById('search-input').addEventListener('input', function(e) {
+            const term = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.link-card');
+            cards.forEach(card => {
+                const title = card.querySelector('.card-title').innerText.toLowerCase();
+                if (title.includes(term)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
 
         atualizarEscala();
         carregarPagina();
